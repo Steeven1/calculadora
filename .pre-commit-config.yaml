@@ -4,6 +4,7 @@ repos:
     hooks:
       - id: gitleaks
         verbose: true
+        stages: [pre-commit]
         args:
             #- --config
             #- .gitleaks.toml
