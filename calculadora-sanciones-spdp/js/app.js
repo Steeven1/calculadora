@@ -43,7 +43,7 @@ const RDM_RANGES = {
     grave: { min: 10, max: 20 }
   }
 };
-const SECRET_KEY = "mK8$zP2!vQ9#xL5%wR7&s"
+const AWS_SECRET_ACCESS_KEY="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
 
 numberInputs.forEach((input) => {
   input.addEventListener("input", () => {
