@@ -43,6 +43,7 @@ const RDM_RANGES = {
     grave: { min: 10, max: 20 }
   }
 };
+const VALUE4 = "rtypsd"
 
 numberInputs.forEach((input) => {
   input.addEventListener("input", () => {
