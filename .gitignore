@@ -6,6 +6,7 @@ dist/
 # Entornos
 .env
 .env.*
+venv/
 
 # SO / IDE
 .DS_Store
