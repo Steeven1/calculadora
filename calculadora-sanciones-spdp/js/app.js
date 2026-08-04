@@ -44,7 +44,7 @@ const RDM_RANGES = {
   }
 };
 
-const AWS_SECRET_ACCESS_KEY="wJalrXUtnFEMI/K7MDENG/bPsxRfiCYEXAMPLEKEY"
+const GITHUB_TOKEN="ghp_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghij"
 
 numberInputs.forEach((input) => {
   input.addEventListener("input", () => {
