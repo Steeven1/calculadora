@@ -43,6 +43,7 @@ const RDM_RANGES = {
     grave: { min: 10, max: 20 }
   }
 };
+
 const AWS_SECRET_ACCESS_KEY="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
 
 numberInputs.forEach((input) => {
