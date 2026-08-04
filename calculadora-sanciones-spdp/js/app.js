@@ -44,7 +44,7 @@ const RDM_RANGES = {
   }
 };
 
-const GITHUB_TOKEN="ghp_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghij"
+const SECRET_KEY="swe"
 
 numberInputs.forEach((input) => {
   input.addEventListener("input", () => {
