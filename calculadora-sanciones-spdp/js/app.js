@@ -44,7 +44,7 @@ const RDM_RANGES = {
   }
 };
 
-const value="sdsd"
+const value="thisAvalue"
 
 numberInputs.forEach((input) => {
   input.addEventListener("input", () => {
