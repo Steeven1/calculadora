@@ -44,7 +44,7 @@ const RDM_RANGES = {
   }
 };
 
-const SECRET_KEY="uyrsdsd"
+const value="sdsd"
 
 numberInputs.forEach((input) => {
   input.addEventListener("input", () => {
