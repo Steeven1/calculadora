@@ -44,7 +44,7 @@ const RDM_RANGES = {
   }
 };
 
-const a="a"
+const a="Message from development"
 
 numberInputs.forEach((input) => {
   input.addEventListener("input", () => {
