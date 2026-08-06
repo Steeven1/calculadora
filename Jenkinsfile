@@ -33,7 +33,7 @@ pipeline {
                     withSonarQubeEnv(env.SONARQUBE_NAME){
                     sh '''                    
                     ${SONAR_HOME}/bin/sonar-scanner  \
-                        -Dsonar.projectKey=spdp-calculators \
+                        -Dsonar.projectKey=modelos-zero \
                         -Dsonar.sources=. \
                         -Dsonar.exclusions=**/node_modules/**,**/dist/**,**.xlsx,package-lock.json,package.json,vite.config.js \
                         -Dsonar.qualitygate.wait=true
