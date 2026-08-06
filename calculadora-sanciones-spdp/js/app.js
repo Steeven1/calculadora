@@ -44,7 +44,7 @@ const RDM_RANGES = {
   }
 };
 
-const a="change the variable name to a"
+const a="a"
 
 numberInputs.forEach((input) => {
   input.addEventListener("input", () => {
