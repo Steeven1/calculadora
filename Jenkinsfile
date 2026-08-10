@@ -62,9 +62,12 @@ pipeline {
 
         stage('Construir Proyecto') {
             steps {
-                script {
-                    // Ejecutar la construcción del proyecto con Vite
-                    echo 'build project'
+                withCredentials([
+                    string(
+                        credentialsId: 'dokploy-webhook-url', 
+                        variable: 'DOKPLOY_WEBHOOK')
+                ]) {
+                    sh 'curl -X POST "$DOKPLOY_WEBHOOK"'
                 }
             }
         }
