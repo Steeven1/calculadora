@@ -6,8 +6,9 @@ pipeline {
         SONARQUBE_NAME = 'sonarqube' // Configura tu servidor SonarQube en Jenkins
         // Obtén el token de SonarQube de las credenciales de Jenkins
         //SONAR_TOKEN = credentials('spdp-calculators')
-    	SONAR_HOME = tool 'SonarScanner'
-   
+    	SONAR_HOME = tool 'sonarqube'
+        SNYK_HOME = tool 'snyk'
+        SNYK_TOKEN = credentials('snyk-api-token')
     }
     
    
@@ -16,12 +17,12 @@ pipeline {
 	
 	stage('Clone sources'){
 	   steps {
-	     git branch: 'feature/test', changelog: false, credentialsId: 'spdp-calculators', url: 'https://github.com/Steeven1/module7ss.git'
+	     git branch: 'main', changelog: false, credentialsId: 'modelos-zero-u-p', url: 'https://github.com/Steeven1/calculadora.git'
 	   }
 	}
 	
-        stage('Analyce of SonarQube cuality') {
-            steps {
+    stage('Analyce of SonarQube quality') {
+        steps {
                 script {
                     // Ejecutar análisis de código con SonarQube
                     // SonarQube debe estar configurado en Jenkins (sonar.properties configurado correctamente)
@@ -35,13 +36,29 @@ pipeline {
                     ${SONAR_HOME}/bin/sonar-scanner  \
                         -Dsonar.projectKey=modelos-zero \
                         -Dsonar.sources=. \
-                        -Dsonar.exclusions=**/node_modules/**,**/dist/**,**.xlsx,package-lock.json,package.json,vite.config.js \
+                        -Dsonar.exclusions=**/node_modules/**,**/dist/**,**.xlsx,package-lock.json,package.json\
                         -Dsonar.qualitygate.wait=true
                     '''
                     }
                 }
             }
         }
+
+        stage('Test dependencies with Snyk') {
+            steps {
+             
+                snykSecurity(nstallation Name>',
+                snykTokenId: '<Your Snyk API Token ID>',
+                // place other optional parameters here, for example:
+                additionalArguments:
+                 '--severity-threshold=high
+                 -d
+                 '
+                )
+            }
+        }
+
+                snykInstallation: '<Your Snyk I
 
         stage('Construir Proyecto') {
             steps {

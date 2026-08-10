@@ -1,0 +1,453 @@
+/**
+ * =============================================================================
+ * Hoja de estilos — Calculadora tratamiento a gran escala (SPDP)
+ *
+ * Estructura aproximada:
+ *   1) :root        — variables de color, sombra y tipografía (tema GRC sobrio).
+ *   2) Base         — reset suave, body, tipografía.
+ *   3) App shell    — .app-shell, cabecera y marca.
+ *   4) Layout       — grid de dos columnas + breakpoint móvil.
+ *   5) Paneles      — .panel, formulario, resultado sticky.
+ *   6) Cuestionario — fieldsets, selects, texto de ayuda.
+ *   7) Art. 14      — bloque de validación y <details>.
+ *   8) Resultado    — badges verde/rojo, puntaje, listas.
+ *   9) Reporte      — botones de exportar HTML.
+ *  10) Footer
+ * =============================================================================
+ */
+
+@import "../shared/spdp-theme.css";
+
+/* --- 1) Contenedor y cabecera --- */
+.app-shell {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2rem;
+}
+
+.app-header {
+  margin-bottom: 1.5rem;
+}
+
+.brand {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.brand-mark {
+  width: 10px;
+  height: 48px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, var(--primary), #1a7fd4);
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.app-title {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.app-subtitle {
+  margin: 0.35rem 0 0 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+  max-width: 70ch;
+}
+
+.app-tagline {
+  margin: 1rem 0 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 85ch;
+}
+
+/* --- 4) Rejilla principal (formulario | resultado) --- */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+@media (max-width: 880px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- 5) Tarjetas / paneles --- */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.15rem 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.panel-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.05rem;
+}
+
+.panel-intro {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.criteria-form-root {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* --- 6) Cada criterio MTGE (fieldset + select) --- */
+.criterion-fieldset {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fafbfd;
+}
+
+.criterion-legend {
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0 0.25rem;
+}
+
+.criterion-desc {
+  margin: 0.4rem 0 0.65rem 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.select-row select {
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--text);
+}
+
+.select-row select:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.panel--result {
+  position: sticky;
+  top: 1rem;
+}
+
+@media (max-width: 880px) {
+  .panel--result {
+    position: static;
+  }
+}
+
+/* --- 8) Panel de resultado: veredicto, puntaje, desglose --- */
+.verdict-block {
+  margin-bottom: 1rem;
+}
+
+.verdict-badge {
+  display: inline-block;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.verdict-badge--pending {
+  background: var(--pending-bg);
+  color: var(--pending);
+  border: 1px solid var(--border);
+}
+
+.verdict-badge--ok {
+  background: var(--ok-bg);
+  color: var(--ok);
+  border: 1px solid #b8dcc8;
+}
+
+.verdict-badge--alert {
+  background: var(--alert-bg);
+  color: var(--alert);
+  border: 1px solid #f0b4b4;
+}
+
+.panel--result.verdict--normal {
+  border-color: #b8dcc8;
+  box-shadow: 0 8px 24px rgba(13, 107, 61, 0.08);
+}
+
+.panel--result.verdict--gran-escala {
+  border-color: #f0b4b4;
+  box-shadow: 0 8px 24px rgba(155, 28, 28, 0.08);
+}
+
+.panel--result.verdict--pending {
+  border-color: var(--border);
+}
+
+.score-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 0.75rem;
+  background: var(--primary-soft);
+  border-radius: 8px;
+  border: 1px solid #cfe2f5;
+}
+
+.score-label {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.score-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.subheading {
+  margin: 1rem 0 0.4rem 0;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.breakdown-ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.88rem;
+}
+
+.breakdown-ul li {
+  margin-bottom: 0.45rem;
+}
+
+.bd-title {
+  font-weight: 600;
+}
+
+.bd-opt {
+  color: var(--muted);
+}
+
+.bd-score {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.bd-critical {
+  color: var(--alert);
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.justification {
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.justification p {
+  margin: 0 0 0.65rem 0;
+}
+
+.justification p:last-child {
+  margin-bottom: 0;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.score-meta {
+  margin-top: 0.75rem !important;
+}
+
+/* --- 7) Bloque Art. 14 (validación / calificación directa) --- */
+.hidden {
+  display: none !important;
+}
+
+.art14-fieldset {
+  margin-top: 1rem;
+  border-color: #cfe2f5;
+  background: #f8fbff;
+}
+
+.art14-fieldset--first {
+  margin-top: 0;
+}
+
+.art14-motivo-wrap {
+  margin-top: 0.85rem;
+}
+
+.art14-motivo-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  color: var(--text);
+}
+
+.req-mark {
+  font-weight: 500;
+  color: var(--alert);
+}
+
+.art14-motivo-textarea {
+  width: 100%;
+  max-width: 100%;
+  padding: 0.55rem 0.65rem;
+  font-family: inherit;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  resize: vertical;
+  min-height: 5rem;
+}
+
+.art14-motivo-textarea:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.mtge-section {
+  margin-top: 1.25rem;
+}
+
+.mtge-section-title {
+  margin-top: 0;
+}
+
+.mtge-section--disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.panel-intro--compact {
+  margin-top: 0.35rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.88rem;
+}
+
+.art14-details {
+  margin: 0.5rem 0 0.75rem 0;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.art14-details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.art14-examples {
+  margin: 0.45rem 0 0 1.1rem;
+  padding: 0;
+}
+
+.art14-examples li {
+  margin-bottom: 0.35rem;
+}
+
+.art14-radios {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.art14-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.art14-label input {
+  margin-top: 0.2rem;
+}
+
+/* --- 9) Botones de reporte HTML --- */
+.report-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.15rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.btn-report {
+  flex: 1 1 auto;
+  min-width: 140px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn-report:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
+
+.btn-report:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-report--outline {
+  background: #fff;
+  color: var(--primary);
+}
+
+/* --- 10) Pie de página --- */
+.app-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+code {
+  font-size: 0.85em;
+  background: #eef1f6;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}

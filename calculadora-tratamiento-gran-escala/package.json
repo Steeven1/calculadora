@@ -1,0 +1,16 @@
+{
+  "name": "calculadora-tratamiento-gran-escala",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Calculadora interactiva: tratamiento a gran escala (SPDP Ecuador) — SPA vanilla + Vite",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^8.0.8"
+  }
+}
