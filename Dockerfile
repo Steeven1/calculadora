@@ -20,7 +20,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /usr/src/calculadora-frontend/dist /usr/share/nginx/html
 
 # Exponer el puerto 80 (puerto estándar HTTP de Nginx)
-EXPOSE 8090
+EXPOSE 80
 
 # Iniciar Nginx en primer plano (la imagen oficial ya sabe cómo hacerlo, 
 # pero es buena práctica definirlo)
