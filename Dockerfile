@@ -8,31 +8,20 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# ===== ETAPA 2: PRODUCCIÓN =====
-FROM node:20-alpine
-WORKDIR /usr/src/calculadora-frontend
+# ===== ETAPA 2: PRODUCCIÓN CON NGINX =====
+FROM nginx:stable-alpine
 
-# Copiar solo los archivos necesarios para instalar dependencias de producción
-COPY package*.json ./
+# (Opcional pero recomendado) Copiar configuración personalizada de Nginx
+# Esto es crucial si tu app es una SPA (React, Vue, Angular)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Instalar SOLO dependencias de producción (sin devDependencies)
-RUN npm ci --omit=dev
+# Copiar los archivos estáticos compilados desde la etapa 'build'
+# hacia el directorio público por defecto de Nginx
+COPY --from=build /usr/src/calculadora-frontend/dist /usr/share/nginx/html
 
-# Copiar el código compilado desde la etapa build
-COPY --from=build /usr/src/calculadora-frontend/dist ./dist
+# Exponer el puerto 80 (puerto estándar HTTP de Nginx)
+EXPOSE 80
 
-ENV PORT=3000
-EXPOSE 3000
-
-# Crear usuario sin privilegios
-RUN addgroup -g 1001 -S calculadora-frontend && \
-    adduser -u 1001 -S calculadora-frontend -G calculadora-frontend
-
-# Dar permisos al directorio
-RUN chown -R calculadora-frontend:calculadora-frontend /usr/src/calculadora-frontend
-
-# Cambiar a usuario sin privilegios
-USER calculadora-frontend
-
-ENV NODE_ENV=production
-CMD ["npm", "start"]
+# Iniciar Nginx en primer plano (la imagen oficial ya sabe cómo hacerlo, 
+# pero es buena práctica definirlo)
+CMD ["nginx", "-g", "daemon off;"]
