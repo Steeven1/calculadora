@@ -9,6 +9,7 @@ pipeline {
     	SONAR_HOME = tool 'sonarqube'
         SNYK_HOME = tool 'snyk'
         SNYK_TOKEN = credentials('snyk-api-token')
+        //inject credentials from jenkins credentials store
     }
     
    
