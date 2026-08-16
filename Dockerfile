@@ -22,11 +22,12 @@ FROM nginxinc/nginx-unprivileged:stable-alpine
 WORKDIR /usr/src/calculadora-frontend
 # (Opcional pero recomendado) Copiar configuración personalizada de Nginx
 # Esto es crucial si tu app es una SPA (React, Vue, Angular)
-COPY --from=build --chown=app:app  /usr/src/calculadora-frontend/nginx.conf /etc/nginx/conf.d/default.conf
+#--chown=app:app para dar propiedad app
+COPY --from=build   /usr/src/calculadora-frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copiar los archivos estáticos compilados desde la etapa 'build'
 # hacia el directorio público por defecto de Nginx
-COPY --from=build --chown=app:app /usr/src/calculadora-frontend/dist /usr/share/nginx/html
+COPY --from=build /usr/src/calculadora-frontend/dist /usr/share/nginx/html
 
 #COPIAR node_modules
 #COPY --from=build --chown=app:app /usr/src/calculadora-frontend/node_modules ./node_modules
