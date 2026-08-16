@@ -15,9 +15,9 @@ RUN npm run build
 
 # ===== ETAPA 2: PRODUCCIÓN CON NGINX =====
 #for production -> nginxinc/nginx-unprivileged:stable-alpine
-FROM nginx:stable-alpine
+FROM nginxinc/nginx-unprivileged:stable-alpine
 #crear usuario con privilegios minimos
-RUN addgroup -S app && adduser -S app -G app
+#RUN addgroup -S app && adduser -S app -G app
 #crear directorio de trabajo
 WORKDIR /usr/src/calculadora-frontend
 # (Opcional pero recomendado) Copiar configuración personalizada de Nginx
@@ -29,10 +29,10 @@ COPY --from=build --chown=app:app  /usr/src/calculadora-frontend/nginx.conf /etc
 COPY --from=build --chown=app:app /usr/src/calculadora-frontend/dist /usr/share/nginx/html
 
 #COPIAR node_modules
-COPY --from=build --chown=app:app /usr/src/calculadora-frontend/node_modules ./node_modules
+#COPY --from=build --chown=app:app /usr/src/calculadora-frontend/node_modules ./node_modules
 
 #usar usuario app
-USER app
+#USER app
 
 # Exponer el puerto 80 (puerto estándar HTTP de Nginx)
 EXPOSE 8080
